@@ -1,8 +1,6 @@
 ### Cloned from github.com/coryhouse/pluralsight-redux-starter
 This adds extra config to deploy a prod version, which will be tagged for use as a boilerplate for future projects
 
-#Starter Kit for [Building Applications in React and Redux in ES6](http://www.pluralsight.com/author/cory-house) on Pluralsight
-
 ## Get Started
 1. **Install [Node 6](https://nodejs.org)**.
 2. **Clone this repository.** - `git clone git@github.com:gazofnaz/react-redux-starter.git`
