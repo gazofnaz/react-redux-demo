@@ -29,12 +29,12 @@ class CoursesPage extends React.Component {
         );
     }
 
+    /**
+     * Dispatch the action
+     */
     onClickSave(){
-        // Nice and verbose!
-        this.props.dispatch(
-            courseActions.createCourse(
-                this.state.course
-            )
+        this.props.createCourse(
+            this.state.course
         );
     }
 
@@ -74,12 +74,14 @@ class CoursesPage extends React.Component {
  * @type {{}}
  */
 CoursesPage.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    courses: PropTypes.array.isRequired
+    courses: PropTypes.array.isRequired,
+    createCourse: PropTypes.func.isRequired
 };
 
 /**
- * Returns the properties we'd like to see exposed in our project
+ * Returns the properties we'd like to see exposed in our project, pulled from the current state
+ *
+ * Allows us to call this.props.courses
  *
  * @param state
  * @param ownProps
@@ -91,9 +93,24 @@ function mapStateToProps(state, ownProps){
     };
 }
 
+/**
+ * Determines what actions are available in the component
+ *
+ * Allows us to call this.props.createCourse() for dispatchers
+ *
+ * Once this is defined, connect will no longer inject a dispatch property to our component
+ *
+ */
+function mapDispatchToProps(dispatch){
+    return{
+        // More sugaaa
+        createCourse: course => dispatch(courseActions.createCourse(course))
+    };
+}
+
 // Connect is a higher order function that does some more magic and creates container components
 // Connect will inject a dispatcher by default to this.props.
-export default connect(mapStateToProps)(CoursesPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
 
 // longer version
 // const temp = connect(mapStateToProps, mapDispatchToProps)

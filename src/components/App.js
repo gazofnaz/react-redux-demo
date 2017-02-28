@@ -19,7 +19,7 @@ class App extends React.Component {
  * This component must have some children which will be passed in from the router
  */
 App.propTypes = {
-  children: PropTypes.object.inRequired
+  children: PropTypes.object.isRequired
 };
 
 export default App;
