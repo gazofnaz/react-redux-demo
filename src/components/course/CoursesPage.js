@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import * as courseActions from '../../actions/courseActions';
 import {bindActionCreators} from 'redux';
+import CourseList from './CourseList';
 
 /**
  * List all the courses
@@ -19,10 +20,15 @@ class CoursesPage extends React.Component {
 
     // Don't define new functions inside a render call, it impacts performance
     render(){
+
+        // How do we know courses will always be props? Anyway, it keeps things shorter
+        const {courses} = this.props;
+
+        // This becomes quite clean
         return(
             <div>
                 <h1>Courses</h1>
-                {this.props.courses.map(this.courseRow)}
+                <CourseList courses={courses}/>
             </div>
         );
     }
