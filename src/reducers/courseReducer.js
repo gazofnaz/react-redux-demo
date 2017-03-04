@@ -3,17 +3,12 @@ import * as types from '../actions/actionTypes';
 // Reducer takes current state and an action and returns the new state
 export default function courseReducer(state =[], action){
     switch (action.type){
-        case types.CREATE_COURSE:
+        case types.LOAD_COURSES_SUCCESS:
             // state is immutable. so we can't do this:
-            // state.push(action.course);
+            // state.push(action.courses);
             // return state;
 
-            // ...too much sugaaa gives developers diabetes of the brian
-            // Spread operator ... returns a new instance of the state array, or something?
-            // Object.assign copies the object received from action.course into a new object
-            return [...state,
-                Object.assign({}, action.course)
-            ];
+            return action.courses;
         default:
             return state;
     }

@@ -3,40 +3,13 @@ import {connect} from 'react-redux';
 import * as courseActions from '../../actions/courseActions';
 import {bindActionCreators} from 'redux';
 
+/**
+ * List all the courses
+ */
 class CoursesPage extends React.Component {
 
     constructor( props, context ){
         super( props, context );
-
-        this.state = {
-            course: {
-                title: ""
-            }
-        };
-
-        // We need to bind this here so we can use "this" to get the state in these methods
-        // Otherwise "this" is bound to the input from where they are called
-        this.onTitleChange = this.onTitleChange.bind(this);
-        this.onClickSave = this.onClickSave.bind(this);
-
-    }
-
-    onTitleChange(event){
-        const course = this.state.course;
-        course.title = event.target.value;
-        this.setState({
-                course: course
-            }
-        );
-    }
-
-    /**
-     * Dispatch the action
-     */
-    onClickSave(){
-        this.props.actions.createCourse(
-            this.state.course
-        );
     }
 
     // corn row. Would be nice to separate template from logic a little bit
@@ -50,21 +23,6 @@ class CoursesPage extends React.Component {
             <div>
                 <h1>Courses</h1>
                 {this.props.courses.map(this.courseRow)}
-                <h2>Add Course</h2>
-
-                {/* By default "this" here refers to the input object*/}
-                <input
-                    type="text"
-                    onChange={this.onTitleChange}
-                    value={this.state.course.title}
-                />
-
-                <input
-                    type="submit"
-                    value="Save"
-                    onClick={this.onClickSave}
-                />
-
             </div>
         );
     }
