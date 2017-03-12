@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux';
 import courses from './courseReducer';
+import authors from './authorReducer';
 
 /**
  * Apply all the reducers here, or something
@@ -7,7 +8,8 @@ import courses from './courseReducer';
  */
 const rootReducer = combineReducers({
     // shorthand property names
-    courses
+    courses,
+    authors
 });
 
 export default rootReducer;

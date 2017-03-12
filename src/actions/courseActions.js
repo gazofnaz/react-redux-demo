@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import courseApi from '../api/mockCourseApi';
+import CourseApi from '../api/mockCourseApi';
 
 // This is an action.
 // It's called by the dispatcher and is handled by the reducer
@@ -16,7 +16,7 @@ export function loadCourses(){
     return function(dispatch) {
         // returns a promise
         // anonymous call after success
-        return courseApi.getAllCourses().then(courses => {
+        return CourseApi.getAllCourses().then(courses => {
             dispatch(loadCoursesSuccess(courses));
         }).catch(error => {
             throw(error);
