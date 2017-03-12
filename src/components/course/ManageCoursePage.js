@@ -20,7 +20,7 @@ class ManageCoursePage extends React.Component {
     render() {
         return (
             <CourseForm
-                allAuthors={[]}
+                allAuthors={this.props.authors}
                 course={this.state.course}
                 errors={this.state.errors}
             />
@@ -34,7 +34,8 @@ class ManageCoursePage extends React.Component {
  * @type {{course: *}}
  */
 ManageCoursePage.propTypes = {
-    course: PropTypes.object.isRequired
+    course: PropTypes.object.isRequired,
+    authors: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
@@ -49,8 +50,22 @@ function mapStateToProps(state, ownProps) {
         category: ''
     };
 
+    /**
+     * Author data is in the wrong format for a select box
+     * mapStateToProps is the best place to format data for that requirement
+     *
+     * @type {Array}
+     */
+    const authorsFormattedForDropdown = state.authors.map(author => {
+       return {
+          value: author.id,
+          text: author.firstName + ' ' + author.lastName
+       };
+    });
+
     return {
-        course: course
+        course: course,
+        authors: authorsFormattedForDropdown
     };
 }
 

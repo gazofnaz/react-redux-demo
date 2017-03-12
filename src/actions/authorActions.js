@@ -3,7 +3,7 @@ import AuthorApi from '../api/mockAuthorApi';
 
 // In a full app this thunk will contain all the actions for CRUD operations
 
-export function loadAuthorsSuccess(courses){
+export function loadAuthorsSuccess(authors){
     return {
         type: types.LOAD_AUTHORS_SUCCESS,
         authors
