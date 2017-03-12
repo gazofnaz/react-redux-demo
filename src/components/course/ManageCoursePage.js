@@ -14,6 +14,22 @@ class ManageCoursePage extends React.Component {
             course: Object.assign({}, props.course),
             errors: {}
         };
+
+        // bind proper this context when update course state is called
+        this.updateCourseState = this.updateCourseState.bind(this);
+    }
+
+    /**
+     * Event change handler for all fields in the form
+     *
+     * @param event
+     * @returns {ShallowWrapper|*|ReactWrapper}
+     */
+    updateCourseState(event){
+        const field = event.target.name;
+        let course = this.state.course;
+        course[field] = event.target.value;
+        return this.setState({course: course});
     }
 
     // Don't define new functions inside a render call, it impacts performance
@@ -21,6 +37,7 @@ class ManageCoursePage extends React.Component {
         return (
             <CourseForm
                 allAuthors={this.props.authors}
+                onChange={this.updateCourseState}
                 course={this.state.course}
                 errors={this.state.errors}
             />
