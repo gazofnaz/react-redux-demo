@@ -24,6 +24,21 @@ class ManageCoursePage extends React.Component {
     }
 
     /**
+     * Function will run when props have changed, but also may run at other times too
+     * as react is a bit paranoid about things changing.
+     *
+     * @param nextProps
+     */
+    componentWillReceiveProps(nextProps){
+        // Check if the course id has changed to avoid unnecessaryry changes
+        if(this.props.course.id != nextProps.course.id) {
+            // We got to the course page directly, so we need to update the props on the page
+            // to populate the form
+            this.setState({course: Object.assign({}, nextProps.course)});
+        }
+    }
+
+    /**
      * Event change handler for all fields in the form
      *
      * @param event
