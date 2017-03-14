@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import * as courseActions from '../../actions/courseActions';
 import {bindActionCreators} from 'redux';
 import CourseList from './CourseList';
+import {browserHistory} from 'react-router';
 
 /**
  * List all the courses
@@ -11,11 +12,17 @@ class CoursesPage extends React.Component {
 
     constructor( props, context ){
         super( props, context );
+        // I guess this is needed so the call in the render binds to this class and not "this" element which is clicked in the dom
+        this.redirectToAddCoursePage = this.redirectToAddCoursePage.bind(this);
     }
 
     // corn row. Would be nice to separate template from logic a little bit
     courseRow(course, index) {
         return <div key={index}>{course.title}</div>;
+    }
+
+    redirectToAddCoursePage(){
+        browserHistory.push('/course');
     }
 
     // Don't define new functions inside a render call, it impacts performance
@@ -28,6 +35,12 @@ class CoursesPage extends React.Component {
         return(
             <div>
                 <h1>Courses</h1>
+                <input
+                    type="submit"
+                    value="Add Course"
+                    className="btn btn-primary"
+                    onClick={this.redirectToAddCoursePage}
+                />
                 <CourseList courses={courses}/>
             </div>
         );

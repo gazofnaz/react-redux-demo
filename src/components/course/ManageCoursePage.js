@@ -17,6 +17,7 @@ class ManageCoursePage extends React.Component {
 
         // bind proper this context when update course state is called
         this.updateCourseState = this.updateCourseState.bind(this);
+        this.saveCourse = this.saveCourse.bind(this);
     }
 
     /**
@@ -32,12 +33,25 @@ class ManageCoursePage extends React.Component {
         return this.setState({course: course});
     }
 
+    /**
+     * Event change handler for saving a course
+     * Where does the event come from?
+     * @param event
+     */
+    saveCourse(event){
+        event.preventDefault();
+        this.props.actions.saveCourse(this.state.course);
+        // redirect after success for a nicer experience
+        this.context.router.push('/courses');
+    }
+
     // Don't define new functions inside a render call, it impacts performance
     render() {
         return (
             <CourseForm
                 allAuthors={this.props.authors}
                 onChange={this.updateCourseState}
+                onSave={this.saveCourse}
                 course={this.state.course}
                 errors={this.state.errors}
             />
@@ -52,7 +66,19 @@ class ManageCoursePage extends React.Component {
  */
 ManageCoursePage.propTypes = {
     course: PropTypes.object.isRequired,
-    authors: PropTypes.array.isRequired
+    authors: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired
+};
+
+/**
+ * Pulls in the react router context so router is available as this.context.router
+ *
+ * Context is a global state used by libraries, but should be avoided by users
+ *
+ * @type {{router: *}}
+ */
+ManageCoursePage.contextTypes = {
+    router: PropTypes.object
 };
 
 function mapStateToProps(state, ownProps) {

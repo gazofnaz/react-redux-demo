@@ -11,6 +11,20 @@ export function loadCoursesSuccess(courses){
     };
 }
 
+export function createCourseSuccess(course){
+    return {
+        type: types.CREATE_COURSE_SUCCESS,
+        course
+    };
+}
+
+export function updateCourseSuccess(course){
+    return {
+        type: types.UPDATE_COURSE_SUCCESS,
+        course
+    };
+}
+
 // This is a thunk. It fetches data from the api
 export function loadCourses(){
     return function(dispatch) {
@@ -18,6 +32,20 @@ export function loadCourses(){
         // anonymous call after success
         return CourseApi.getAllCourses().then(courses => {
             dispatch(loadCoursesSuccess(courses));
+        }).catch(error => {
+            throw(error);
+        });
+    };
+}
+
+// Thunk to save a course
+export function saveCourse(course){
+    // The store can be accessed here if needed, rather than pass things in.
+    return function(dispatch, getState) {
+        return CourseApi.saveCourse(course).then(savedCourse => {
+            // If the course already has an id, update it. Otherwise create as new.
+            course.id ? dispatch(updateCourseSuccess(savedCourse)):
+                        dispatch(createCourseSuccess(savedCourse));
         }).catch(error => {
             throw(error);
         });
