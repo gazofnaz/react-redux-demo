@@ -30,7 +30,7 @@ class ManageCoursePage extends React.Component {
      * @param nextProps
      */
     componentWillReceiveProps(nextProps){
-        // Check if the course id has changed to avoid unnecessaryry changes
+        // Check if the course id has changed to avoid unnecessary changes
         if(this.props.course.id != nextProps.course.id) {
             // We got to the course page directly, so we need to update the props on the page
             // to populate the form

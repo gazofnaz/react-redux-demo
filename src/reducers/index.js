@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux';
 import courses from './courseReducer';
 import authors from './authorReducer';
+import numAjaxCallsInProgress from './ajaxStatusReducer';
 
 /**
  * Apply all the reducers here, or something
@@ -9,7 +10,9 @@ import authors from './authorReducer';
 const rootReducer = combineReducers({
     // shorthand property names
     courses,
-    authors
+    authors,
+    numAjaxCallsInProgress
+
 });
 
 export default rootReducer;

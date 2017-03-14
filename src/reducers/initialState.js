@@ -3,5 +3,6 @@
 // Makes it easier to visualise the store and app.
 export default {
     authors: [],
-    courses: []
+    courses: [],
+    numAjaxCallsInProgress: 0 // Display the dots when value is greater than zero
 };

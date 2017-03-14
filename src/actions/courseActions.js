@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
 import CourseApi from '../api/mockCourseApi';
+import {beginAjaxCall} from './ajaxStatusActions';
 
 // This is an action.
 // It's called by the dispatcher and is handled by the reducer
@@ -28,6 +29,10 @@ export function updateCourseSuccess(course){
 // This is a thunk. It fetches data from the api
 export function loadCourses(){
     return function(dispatch) {
+
+        // Tell the world that we have started an ajax action
+        dispatch(beginAjaxCall());
+
         // returns a promise
         // anonymous call after success
         return CourseApi.getAllCourses().then(courses => {
@@ -42,6 +47,10 @@ export function loadCourses(){
 export function saveCourse(course){
     // The store can be accessed here if needed, rather than pass things in.
     return function(dispatch, getState) {
+
+        // Tell the world that we have started an ajax action
+        dispatch(beginAjaxCall());
+
         return CourseApi.saveCourse(course).then(savedCourse => {
             // If the course already has an id, update it. Otherwise create as new.
             course.id ? dispatch(updateCourseSuccess(savedCourse)):
