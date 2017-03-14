@@ -9,7 +9,7 @@ import {loadCourses} from './actions/courseActions';
 import {loadAuthors} from './actions/authorActions';
 import './styles/styles.css'; // webpack can import css (what about scss?)
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-
+import '../node_modules/toastr/build/toastr.min.css';
 
 /**
  * Instance of the store. Can pass override of state here if desired. Sometimes useful if state is populated from server

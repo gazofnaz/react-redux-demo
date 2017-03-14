@@ -1,6 +1,6 @@
 import * as types from './actionTypes';
 import CourseApi from '../api/mockCourseApi';
-import {beginAjaxCall} from './ajaxStatusActions';
+import {beginAjaxCall, ajaxCallError} from './ajaxStatusActions';
 
 // This is an action.
 // It's called by the dispatcher and is handled by the reducer
@@ -56,6 +56,9 @@ export function saveCourse(course){
             course.id ? dispatch(updateCourseSuccess(savedCourse)):
                         dispatch(createCourseSuccess(savedCourse));
         }).catch(error => {
+            // Promise throws are silent to end users (mostly), so we need to dispatch our own warning
+            // This is used to stop the loading dots
+            dispatch(ajaxCallError(error));
             throw(error);
         });
     };

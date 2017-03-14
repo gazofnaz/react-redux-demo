@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as courseActions from '../../actions/courseActions';
 import CourseForm from './CourseForm';
+import toastr from 'toastr';
 
 class ManageCoursePage extends React.Component {
 
@@ -63,7 +64,13 @@ class ManageCoursePage extends React.Component {
         this.setState({saving: true});
         this.props.actions.saveCourse(this.state.course)
             // So promises are actually useful. Delay the redirect until save is complete
-            .then( () => this.redirect() );
+            .then( () => this.redirect() )
+            .catch(error => {
+                // nice failure error, but a form display would be nicer
+                toastr.error(error);
+                // remember to update the state
+                this.setState({saving: false});
+            });
     }
 
     /**
@@ -71,6 +78,8 @@ class ManageCoursePage extends React.Component {
      */
     redirect() {
         this.setState({saving: false});
+        // Adds a green popup to indicate success.
+        toastr.success('Course Saved!');
         // redirect after success for a nicer experience
         this.context.router.push('/courses');
     }

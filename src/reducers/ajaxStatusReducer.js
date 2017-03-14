@@ -20,7 +20,9 @@ export default function ajaxStatusReducer(state = initialState.numAjaxCallsInPro
         return state + 1;
     }
     // A risky assumption based on the convention of using "success" for all our ajax calls
-    else if(actionTypeEndsInSuccess(action.type)){
+    // Added check for action type of error, in case we catch an error from the api
+    else if( action.type == types.AJAX_CALL_ERROR ||
+        actionTypeEndsInSuccess(action.type)){
         return state - 1;
     }
 
