@@ -6,6 +6,9 @@ import CourseForm from './CourseForm';
 
 class ManageCoursePage extends React.Component {
 
+    // when the page is first constructed it takes the course value from props and assigns it to state.
+    // this becomes a problem when visiting the page directly because there are no props at that time,
+    // due to the ajax requests taking time to complete.
     constructor(props, context) {
         super(props, context);
         // setup local state for the form
@@ -81,17 +84,48 @@ ManageCoursePage.contextTypes = {
     router: PropTypes.object
 };
 
+/**
+ * 'Private' method to fetch course by id.
+ *
+ * Used to populate the form for the current course management page
+ *
+ * @param courses
+ * @param id
+ * @returns {*}
+ */
+function getCourseById(courses, id) {
+    // find our course in the provided list of courses
+    const course = courses.filter(course => course.id == id);
+    if(course) return course[0]; // filter returns an array
+    return null;
+}
+
+/**
+ *
+ * @param state
+ * @param ownProps
+ * @returns {{course: {id: string, watchHref: string, title: string, authorId: string, length: string, category: string}, authors: Array}}
+ */
 function mapStateToProps(state, ownProps) {
 
-    // not sure why we do this
+    // Fetch the course id from the url
+    const courseId = ownProps.params.id; // id is from '/course/:id'
+
+    // by default we load an empty course. We apply correct values below if the course exists
+    // Wouldn't san interface be nice here?
     let course = {
-        id: '',
-        watchHref: '',
-        title: '',
-        authorId: '',
-        length: '',
-        category: ''
+        id:         '',
+        watchHref:  '',
+        title:      '',
+        authorId:   '',
+        length:     '',
+        category:   ''
     };
+
+    // Check that courses have loaded before making the request to filter by id
+    if (courseId && state.courses.length > 0){
+        course = getCourseById(state.courses, courseId);
+    }
 
     /**
      * Author data is in the wrong format for a select box
