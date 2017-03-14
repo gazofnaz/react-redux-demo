@@ -15,7 +15,9 @@ class ManageCoursePage extends React.Component {
         this.state = {
             // create new object, assign all the properties from old to new
             course: Object.assign({}, props.course),
-            errors: {}
+            errors: {},
+            // adding some local state here, because global saving state is overkill
+            saving: false
         };
 
         // bind proper this context when update course state is called
@@ -58,7 +60,17 @@ class ManageCoursePage extends React.Component {
      */
     saveCourse(event){
         event.preventDefault();
-        this.props.actions.saveCourse(this.state.course);
+        this.setState({saving: true});
+        this.props.actions.saveCourse(this.state.course)
+            // So promises are actually useful. Delay the redirect until save is complete
+            .then( () => this.redirect() );
+    }
+
+    /**
+     * At what point do we admit that this class is messy as hell?
+     */
+    redirect() {
+        this.setState({saving: false});
         // redirect after success for a nicer experience
         this.context.router.push('/courses');
     }
@@ -72,6 +84,7 @@ class ManageCoursePage extends React.Component {
                 onSave={this.saveCourse}
                 course={this.state.course}
                 errors={this.state.errors}
+                saving={this.state.saving}
             />
         );
     }
